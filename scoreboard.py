@@ -1,5 +1,5 @@
 from turtle import Turtle
-
+from file_handler import read_file, write_file
 ALIGNMENT = "center"
 FONT = ("Arial", 24, "normal")
 
@@ -8,6 +8,7 @@ class ScordBoard(Turtle):
     def __init__(self):
         super().__init__()
         self.score = 0
+        self.high_score = int(read_file('/score.txt'))
         self.color("white")
         self.penup()
         self.goto(0,270)
@@ -15,11 +16,20 @@ class ScordBoard(Turtle):
         self.update_scoreboard()
 
     def update_scoreboard(self):
-        self.write(f"Score: {self.score}",align=ALIGNMENT, font=FONT)
+        self.clear()
+        self.goto(0,270)
+        self.color("white")
+        self.write(f"Score: {self.score} High Score: {self.high_score}",align=ALIGNMENT, font=FONT)
 
     def increase_score(self):
         self.score +=1
-        self.clear()
+        self.update_scoreboard()
+
+    def rest_scoreboard(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+            write_file('/score.txt', f"{self.high_score}")
+        self.score = 0
         self.update_scoreboard()
 
     def game_over(self):

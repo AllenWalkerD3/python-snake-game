@@ -33,7 +33,7 @@ while game_is_on:
         scoreboard.increase_score()
 
     if snake.check_wall_collions() or snake.check_tail_collions():
-        game_is_on = False
-        scoreboard.game_over()
+        scoreboard.rest_scoreboard()
+        snake.rest()
         
 screen.exitonclick()
